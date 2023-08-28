@@ -3,10 +3,10 @@
 - This repo is forked from bw_web_builds
 - To build and extract for AS Secrets:
 
-1. git checkout master, sync with upstream, git checkout new ayam branch (2023.7.1-ayam), git rebase master to get new changes
+1. git checkout master, sync with upstream, git checkout new ayam branch using vw version (2023.7.1), git rebase master to get new changes
 2. update Dockerfile copy resources to: `COPY --chown=node:node resources-ayam /resources`
 3. No need to update any other files in /scripts
-4. Create new patch based on latest patch, give it a higher numerical file name so that when sorted it will be picked as latest
+4. Create new patch based on latest patch, give it an additional decimal place (2023.7.1.1) so that when sorted it will be picked as latest
 5. start colima (make sure it has at least 8 GB RAM) and then run `make docker-extract`
 6. this command first calls the `make docker` command which is the docker build on the default Dockerfile
 7. move extract from docker_builds/ to artifacts/, then rsync to server web-vault dir
