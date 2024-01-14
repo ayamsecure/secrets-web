@@ -1,7 +1,16 @@
+# Local build artifacts
 builds/
 docker_builds/
+container_builds/
 web-vault/
 
-# *.tar.gz
-*.tar.gz.text
+# Other
+.env
+.vscode
 .DS_Store
+
+# Release files
+*.tar.gz
+*.tar.gz.asc
+*.tar.gz.text
+sha256sums.txt
