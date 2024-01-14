@@ -4,10 +4,10 @@
 
 ### When a new vw-web-vault release has been published:
 
-1. from terminal, `git checkout master` (ignore untracked changes) and then `git fetch upstream` and then `git merge upstream/master`
-2. `git checkout release` and then `git rebase master` to bring in new changes into release branch
-3. from release branch, create new version branch `git checkout -b 2023.8.2`
-4. Create new patchfile based on latest patch, give it an additional decimal place (2023.8.2.1) so that when sorted it will be picked as latest, no need to update any other files
+1. from terminal, `git checkout master` (ignore untracked changes) then `git fetch upstream` then `git merge upstream/master` then `git push origin master`
+2. `git checkout main-ayam` then `git merge master` to bring in new changes into main-ayam branch, resolve conflicts (accept incoming for ayam changes), `git add .` then `git commit` to conclude merge and `git push`
+3. from main-ayam branch, create new version branch `git checkout -b 2024.1.0`
+4. Create new patchfile based on latest patch, give it an additional decimal place (2024.1.0.1) so that when sorted it will be picked as latest, no need to update any other files
 5. run SED commands on patchfile, run 2 manual deletes, then manually verify no other changes needed
 6. ensure Dockerfile copy resources is set to: `COPY --chown=node:node resources-ayam /resources`
 7. start colima (make sure it has at least 8 GB RAM) and then from project root run `make docker-extract`
@@ -42,6 +42,16 @@ sed -i 's#issuer=Vaultwarden#issuer=AyamSecureSecrets#g' $PATCHFILE
 
 - manually delete 6 lines in frontend-layout.component "...unofficial..."
 - in file "apps/web/src/app/layouts/footer.component.html" delete div containing col-8
+
+Notes:
+
+```
+- "Vaultwarden wiki" > "Ayam Secure Secrets Docs" x2
+- "Vaultwarden Web" in x6 places
+  - let title = "Vaultwarden Web" x1
+  - class="col">Vaultwarden Web< x1
+  - "A modified version..." x1
+```
 
 ### Project Setup:
 
