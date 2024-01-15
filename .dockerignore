@@ -13,6 +13,8 @@ web-vault
 .github
 Makefile
 .vscode
+archive
+artifacts
 
 # Release files
 *.tar.gz
