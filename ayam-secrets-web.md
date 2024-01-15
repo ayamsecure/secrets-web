@@ -10,14 +10,13 @@
 4. Create new patchfile based on latest patch, give it an additional decimal place (2024.1.0.1) so that when sorted it will be picked as latest, no need to update any other files
 5. run SED commands on patchfile, run 1 manual mulit-line delete, then manually verify no other changes needed
 6. ensure Dockerfile copy resources is set to: `COPY --chown=node:node resources-ayam /resources`
-7. start colima (make sure it has at least 8 GB RAM) and then from project root run `make docker-extract`
-8. this command first calls the `make docker` command which is the docker build on the default Dockerfile
-9. move tar extract from docker_builds/ to artifacts/, then rsync to server web-vault dir
-10. on server, `tar -xf name-of-archive.tar.bz2(gz) -C /path/to/dir`
-
-```
-docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2024.1.0 .
-```
+7. use jibhi3 to build image: `docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2024.1.0 .`
+8. docker login then `docker push jayknyn/ayam-secrets-web:2024.1.0`
+9. git push changes and after testing on staging service merge into main-ayam via PR
+<!-- 7. start colima (make sure it has at least 8 GB RAM) and then from project root run `make docker-extract`
+10. this command first calls the `make docker` command which is the docker build on the default Dockerfile
+11. move tar extract from docker_builds/ to artifacts/, then rsync to server web-vault dir
+12. on server, `tar -xf name-of-archive.tar.bz2(gz) -C /path/to/dir` -->
 
 ### Patches to be made:
 
