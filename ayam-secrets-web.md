@@ -8,7 +8,7 @@
 2. `git checkout main-ayam` then `git merge master` to bring in new changes into main-ayam branch, resolve conflicts (accept incoming for ayam changes), `git add .` then `git commit` to conclude merge and `git push`
 3. from main-ayam branch, create new version branch `git checkout -b 2024.1.0`
 4. Create new patchfile based on latest patch, give it an additional decimal place (2024.1.0.1) so that when sorted it will be picked as latest, no need to update any other files
-5. run SED commands on patchfile, run 2 manual deletes, then manually verify no other changes needed
+5. run SED commands on patchfile, run 1 manual mulit-line delete, then manually verify no other changes needed
 6. ensure Dockerfile copy resources is set to: `COPY --chown=node:node resources-ayam /resources`
 7. start colima (make sure it has at least 8 GB RAM) and then from project root run `make docker-extract`
 8. this command first calls the `make docker` command which is the docker build on the default Dockerfile
@@ -16,7 +16,7 @@
 10. on server, `tar -xf name-of-archive.tar.bz2(gz) -C /path/to/dir`
 
 ```
-docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2023.9.1 .
+docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2024.1.0 .
 ```
 
 ### Patches to be made:
@@ -24,26 +24,30 @@ docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2023.9.1 .
 - run from project root
 
 ```
-export PATCHFILE=patches/v2023.9.1.1.patch
-sed -i 's#Vaultwarden wiki#Ayam Secure Secrets Docs#g' $PATCHFILE
-sed -i 's#let title = "Vaultwarden Web"#let title = "Ayam Secure Secrets"#g' $PATCHFILE
-sed -i 's#class="col">Vaultwarden Web<#class="col">Ayam Secure Secrets (powered by Bitwarden)<#g' $PATCHFILE
-sed -i 's#A modified version of the Bitwarden&reg; Web Vault for Vaultwarden##' $PATCHFILE
-sed -i 's#Vaultwarden Web<br#Ayam Secure Secrets (powered by Bitwarden)<br#g' $PATCHFILE
-sed -i 's#Title="Vaultwarden Web"#Title="Ayam Secure Secrets"#g' $PATCHFILE
-sed -i 's#href="https://github.com/dani-garcia/vaultwarden/"#href="https://ayamsecure.com/contact/"#g' $PATCHFILE
-sed -i 's#<title page-title>Vaultwarden Web</title>#<title page-title>Ayam Secure Secrets Web Vault</title>#g' $PATCHFILE
-sed -i 's#alt="Vaultwarden logo"#alt="Ayam Secure Secrets logo"#g' $PATCHFILE
-sed -i 's#"name": "Vaultwarden Web"#"name": "Ayam Secure Secrets Web Vault"#g' $PATCHFILE
-sed -i 's#otpauth://totp/Vaultwarden#otpauth://totp/AyamSecureSecrets#g' $PATCHFILE
-sed -i 's#issuer=Vaultwarden#issuer=AyamSecureSecrets#g' $PATCHFILE
+export PATCHFILE=patches/v2024.1.0.1.patch
+sed -i 's#Vaultwarden wiki#Ayam Secure Secrets Docs#g' $PATCHFILE    # 2 changes
+sed -i 's#let title = "Vaultwarden Web"#let title = "Ayam Secure Secrets"#g' $PATCHFILE    # 1 change
+sed -i 's#class="col">Vaultwarden Web<#class="col">Ayam Secure Secrets (powered by Bitwarden)<#g' $PATCHFILE    # 1 change
+sed -i 's#A modified version of the Bitwarden&reg; Web Vault for Vaultwarden##' $PATCHFILE    # 2 changes
+sed -i 's#Vaultwarden Web<br#Ayam Secure Secrets (powered by Bitwarden)<br#g' $PATCHFILE    # 1 change
+sed -i 's#Title="Vaultwarden Web"#Title="Ayam Secure Secrets"#g' $PATCHFILE    # 1 change
+sed -i 's#href="https://github.com/dani-garcia/vaultwarden/"#href="https://ayamsecure.com/contact/"#g' $PATCHFILE    # 1 change
+sed -i 's#<title page-title>Vaultwarden Web</title>#<title page-title>Ayam Secure Secrets Web Vault</title>#g' $PATCHFILE    # 1 change
+sed -i 's#logo-themed" alt="Vaultwarden"#logo-themed" alt="Ayam Secure Secrets"#g' $PATCHFILE    # 2 changes
+sed -i 's#"name": "Vaultwarden Web"#"name": "Ayam Secure Secrets Web Vault"#g' $PATCHFILE    # 1 change
+sed -i 's#otpauth://totp/Vaultwarden#otpauth://totp/AyamSecureSecrets#g' $PATCHFILE    # 1 change
+sed -i 's#issuer=Vaultwarden#issuer=AyamSecureSecrets#g' $PATCHFILE    # 1 change
+sed -i 's#<div class="col-8 text-center">#<div class="col text-center">#g' $PATCHFILE    # 1 change
+sed -i 's#https://vaultwarden#https://secrets#g' $PATCHFILE    # 4 changes
+sed -i 's#Vaultwarden CHANGES#Ayam Secure Changes#g' $PATCHFILE    # 2 changes
+sed -i 's#left with a Vaultwarden icon#left with a Secrets icon#g' $PATCHFILE    # 1 change
 
 ```
 
-- manually delete 6 lines in frontend-layout.component "...unofficial..."
-- in file "apps/web/src/app/layouts/footer.component.html" delete div containing col-8
+- in section `frontend-layout.component` manually delete 5 lines inclusive of div tags "...unofficial..." and change `@@ -1,6 +1,12 @@` to `@@ -1,6 +1,7 @@`
+- in section `footer.component` delete empty line in div containing `col text-center` and then change `@@ -1,7 +1,9 @@` to `@@ -1,7 +1,8 @@`
 
-Notes:
+Old Notes:
 
 ```
 - "Vaultwarden wiki" > "Ayam Secure Secrets Docs" x2
@@ -55,7 +59,7 @@ Notes:
 
 ### Project Setup:
 
-1. Fork `https://github.com/dani-garcia/bw_web_builds` master branch to my master branch, create a release branch off of master and keep all my patches merged into release
+1. Fork `https://github.com/dani-garcia/bw_web_builds` master branch to my master branch, create a main branch off of master and keep all my patches merged into main
 2. Git clone repo and in master branch set upstream with: `git remote add upstream git@github.com:dani-garcia/bw_web_builds.git` and verify with `git remote -v`
 
 ### Reference:
