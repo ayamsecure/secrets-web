@@ -6,12 +6,12 @@
 
 1. from terminal, `git checkout master` (ignore untracked changes) then `git fetch upstream` then `git merge upstream/master` then `git push origin master`
 2. `git checkout main-ayam` then `git merge master` to bring in new changes into main-ayam branch, resolve conflicts (accept incoming for ayam changes), `git add .` then `git commit` to conclude merge and `git push`
-3. from main-ayam branch, create new version branch `git checkout -b 2024.1.1`
+3. from main-ayam branch, create new version branch `git checkout -b 2024.1.1b`
 4. Create new patchfile based on latest patch, give it an additional decimal place (2024.1.0.1) so that when sorted it will be picked as latest, no need to update any other files
 5. run SED commands on patchfile, run 1 manual mulit-line delete, then manually verify no other changes needed
 6. ensure Dockerfile copy resources is set to: `COPY --chown=node:node resources-ayam /resources`
-7. use jibhi3 to build image: `docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2024.1.1 .`
-8. docker login then `docker push jayknyn/ayam-secrets-web:2024.1.1`
+7. use jibhi3 to build image: `docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2024.1.1b .`
+8. docker login then `docker push jayknyn/ayam-secrets-web:2024.1.1b`
 9. git push changes and after testing on staging service merge into main-ayam via PR
 <!-- 7. start colima (make sure it has at least 8 GB RAM) and then from project root run `make docker-extract`
 10. this command first calls the `make docker` command which is the docker build on the default Dockerfile
@@ -49,6 +49,7 @@ sed -i 's#left with a Vaultwarden icon#left with a Secrets icon#g' $PATCHFILE   
 Notes:
 
 - for v2024.1.1, the only change was in the Dockerfile pointing to 2024.1.1 bw client hash updates, no new patchfile
+- for v2024.1.1b, change was reverting a fix in the v2024.1.0.patch, change reflected in v2024.1.0.1.patch
 
 Old Notes:
 
