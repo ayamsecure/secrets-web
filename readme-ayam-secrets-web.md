@@ -6,12 +6,12 @@
 
 1. from terminal, `git checkout master` (ignore untracked changes) then `git fetch upstream` then `git merge upstream/master` then `git push origin master`
 2. `git checkout main-ayam` then `git merge master` to bring in new changes into main-ayam branch, resolve conflicts (accept incoming for ayam changes), `git add .` then `git commit` to conclude merge and `git push`
-3. from main-ayam branch, create new version branch `git checkout -b 2024.1.1b`
+3. from main-ayam branch, create new version branch `git checkout -b 2024.1.2`
 4. Create new patchfile based on latest patch, give it an additional decimal place (2024.1.0.1) so that when sorted it will be picked as latest, no need to update any other files
-5. run SED commands on patchfile, run 1 manual mulit-line delete, then manually verify no other changes needed
+5. run SED commands on patchfile, run 2 manual mulit-line deletes, then manually verify no other changes needed
 6. ensure Dockerfile copy resources is set to: `COPY --chown=node:node resources-ayam /resources`
-7. use jibhi3 to build image: `docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2024.1.1b .`
-8. docker login then `docker push jayknyn/ayam-secrets-web:2024.1.1b`
+7. git push changes and use jibhi3 to build image: `docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2024.1.2 .`
+8. docker login then `docker push jayknyn/ayam-secrets-web:2024.1.2`
 9. git push changes and after testing on staging service merge into main-ayam via PR
 <!-- 7. start colima (make sure it has at least 8 GB RAM) and then from project root run `make docker-extract`
 10. this command first calls the `make docker` command which is the docker build on the default Dockerfile
@@ -23,7 +23,7 @@
 - run from project root
 
 ```
-export PATCHFILE=patches/v2024.1.0.1.patch
+export PATCHFILE=patches/v2024.1.2.1.patch
 sed -i 's#Vaultwarden wiki#Ayam Secure Secrets Docs#g' $PATCHFILE    # 2 changes
 sed -i 's#let title = "Vaultwarden Web"#let title = "Ayam Secure Secrets"#g' $PATCHFILE    # 1 change
 sed -i 's#class="col">Vaultwarden Web<#class="col">Ayam Secure Secrets (powered by Bitwarden)<#g' $PATCHFILE    # 1 change
@@ -40,6 +40,7 @@ sed -i 's#<div class="col-8 text-center">#<div class="col text-center">#g' $PATC
 sed -i 's#https://vaultwarden#https://secrets#g' $PATCHFILE    # 4 changes
 sed -i 's#Vaultwarden CHANGES#Ayam Secure Changes#g' $PATCHFILE    # 2 changes
 sed -i 's#left with a Vaultwarden icon#left with a Secrets icon#g' $PATCHFILE    # 1 change
+sed -i 's#not supported by Vaultwarden#not supported by Ayam Secure Secrets#g' $PATCHFILE    # 1 change
 
 ```
 
