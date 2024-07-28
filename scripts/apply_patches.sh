@@ -43,10 +43,10 @@ cp -vfR ../resources/src/* ./apps/web/src/
 
 echo "Patching logos"
 replace_embedded_svg_icon \
-	../resources/vaultwarden-admin-console-logo.svg \
+	../resources/vaultwarden-admin-console-logo.png \
 	./apps/web/src/app/admin-console/icons/admin-console-logo.ts
-replace_embedded_svg_icon \
-	../resources/vaultwarden-password-manager-logo.svg \
+replace_embeddepng_icon \
+	../resources/vaultwarden-password-manager-logo.png \
 	./apps/web/src/app/layouts/password-manager-logo.ts
 
 echo "Using patch: ${PATCH_NAME}"
