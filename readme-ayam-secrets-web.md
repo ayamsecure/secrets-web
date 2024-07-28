@@ -73,3 +73,9 @@ Old Notes:
 ### Reference:
 
 - in std notes: "ayam secrets vaultwarden custom, web-vault"
+
+### Scratch
+
+```
+docker buildx build --platform linux/amd64 -f Dockerfile -t jayknyn/ayam-secrets-web:2024.5.1 --load .
+```
