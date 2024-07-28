@@ -10,8 +10,8 @@
 4. Create new patchfile based on latest patch, give it an additional decimal place (2024.5.0.1) so that when sorted it will be picked as latest, no need to update any other files
 5. run SED commands (below) on patchfile, run 1 manual mulit-line deletes, then manually verify no other changes needed (18 mentions still of vaultwarden)
 6. ensure Dockerfile copy resources is set to: `COPY --chown=node:node resources-ayam /resources`
-7. git push changes and use jibhi3 (to follow upstream use of amd64 for web files build) to build image:
-   `docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2024.5.1 .`
+7. git push changes and use colima x86 on optimont (or jibhi3) (to follow upstream use of amd64 for web files build) to build image:
+   `docker buildx build --platform linux/amd64 -f Dockerfile -t jayknyn/ayam-secrets-web:2024.5.1 --load .`
 8. docker login then `docker push jayknyn/ayam-secrets-web:2024.5.1`
 9. git push changes and after testing on staging service merge into main-ayam via PR
 <!-- 7. start colima (make sure it has at least 8 GB RAM) and then from project root run `make docker-extract`
@@ -79,3 +79,5 @@ Old Notes:
 ```
 docker buildx build --platform linux/amd64 -f Dockerfile -t jayknyn/ayam-secrets-web:2024.5.1 --load .
 ```
+
+- old docker build: `docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2024.5.1 .`
