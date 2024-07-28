@@ -42,7 +42,7 @@ echo "Patching images"
 cp -vfR ../resources/src/* ./apps/web/src/
 
 echo "Patching logos"
-replace_embedded_svg_icon \
+replace_embeddepng_icon \
 	../resources/vaultwarden-admin-console-logo.png \
 	./apps/web/src/app/admin-console/icons/admin-console-logo.ts
 replace_embeddepng_icon \
