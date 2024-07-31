@@ -9,6 +9,10 @@
 3. from main-ayam branch, create new version branch `git checkout -b 2024.5.1`
 4. Create new patchfile based on latest patch, give it an additional decimal place (2024.5.0.1) so that when sorted it will be picked as latest, no need to update any other files
 5. run SED commands (below) on patchfile, run 1 manual mulit-line deletes, then manually verify no other changes needed (18 mentions still of vaultwarden)
+
+- verify login.component.html against upstream bitwarden-clients repos
+- verify locales/en/message.json
+
 6. ensure Dockerfile copy resources is set to: `COPY --chown=node:node resources-ayam /resources`
 7. git push changes and use colima x86 on optimont (or jibhi3) (to follow upstream use of amd64 for web files build) to build image:
    `docker buildx build --platform linux/amd64 -f Dockerfile -t jayknyn/ayam-secrets-web:2024.5.1 --load .`
@@ -54,6 +58,10 @@ Patch Notes:
 - for v2024.5.1, actual release was 2024.5.1b and latest patchfile was 2024.5.0, so went with 2024.5.1 for image tag and branch name
 - for v2024.1.1b, change was reverting a fix in the v2024.1.0.patch, change reflected in v2024.1.0.1.patch
 - for v2024.1.1, the only change was in the Dockerfile pointing to 2024.1.1 bw client hash updates, no new patchfile
+
+Graphics notes:
+
+- process to make svg: create png from canva > use photoroom.com/tools/background-remover make transparent > open in Inkspace desktop app, export as svg, ensure background is transparent > edit svg, remove fixed width and height
 
 Old Notes:
 
