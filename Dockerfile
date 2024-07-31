@@ -15,7 +15,7 @@
 #    Note: you can use --build-arg to specify the version to build:
 #    docker build -t web_vault_build --build-arg VAULT_VERSION=main .
 
-FROM node:18-bookworm as build
+FROM node:18.18.0-bookworm AS build
 RUN node --version && npm --version
 
 # Prepare the folder to enable non-root, otherwise npm will refuse to run the postinstall
