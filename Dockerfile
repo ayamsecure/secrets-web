@@ -33,7 +33,7 @@ RUN mkdir /bw_web_builds
 WORKDIR /bw_web_builds
 
 COPY patches ./patches
-COPY resources ./resources
+COPY resources-ayam ./resources
 COPY scripts ./scripts
 
 RUN ./scripts/checkout_web_vault.sh
