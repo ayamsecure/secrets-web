@@ -6,22 +6,17 @@
 
 1. from terminal, `git checkout master` (ignore untracked changes) then `git fetch upstream` then `git merge upstream/master` then `git push origin master`
 2. `git checkout main-ayam` then `git merge master` to bring in new changes into main-ayam branch, resolve conflicts (accept incoming for ayam changes), `git add .` then `git commit` to conclude merge and `git push`
-3. from main-ayam branch, create new version branch `git checkout -b 2025.1.1`
-4. Create new patchfile based on latest patch, give it an additional decimal place (2025.1.1.1) so that when sorted it will be picked as latest, no need to update any other files
-5. run SED commands (below) on patchfile, run 2 manual mulit-line deletes, then manually verify no other changes needed in `resources` dir
+3. from main-ayam branch, create new version branch `git checkout -b 2025.10.1`
+
+4. run SED commands (below) on patchfile, run 2 manual mulit-line deletes, then manually verify no other changes needed in `resources` dir
 
 - verify login.component.html against upstream bitwarden-clients repos (find release, browse branch: clients/apps/web/src/app/auth/login/)
 - verify locales/en/message.json against upstream (clients/apps/web/src/locales/en/messages.json)
 
-6. ensure Dockerfile copy resources is set to: `COPY resources-ayam /resources`
 7. git push changes and use colima x86 on optimac (16GB RAM, 4 CPU) (or jibhi3) (to follow upstream use of amd64 for web files build) to build image:
-   `docker buildx build --platform linux/amd64 -f Dockerfile -t jayknyn/ayam-secrets-web:2025.1.1 --push .`
-8. docker login then `docker push jayknyn/ayam-secrets-web:2025.1.1`
+   `docker buildx build --platform linux/amd64 -f Dockerfile -t jayknyn/ayam-secrets-web:2025.10.1-2 --push .`
+8. docker login then `docker push jayknyn/ayam-secrets-web:2025.10.1`
 9. git push changes and after testing on staging service merge into main-ayam via PR
-<!-- 7. start colima (make sure it has at least 8 GB RAM) and then from project root run `make docker-extract`
-10. this command first calls the `make docker` command which is the docker build on the default Dockerfile
-11. move tar extract from docker_builds/ to artifacts/, then rsync to server web-vault dir
-12. on server, `tar -xf name-of-archive.tar.bz2(gz) -C /path/to/dir` -->
 
 ### Patches to be made:
 
@@ -43,7 +38,7 @@
 
 Patch Notes:
 
-- for v2025.1.1, login component file name changed upstream
+- for v2025.10.1, login component file name changed upstream
 - for v2024.1.1b, change was reverting a fix in the v2024.1.0.patch, change reflected in v2024.1.0.1.patch
 - for v2024.1.1, the only change was in the Dockerfile pointing to 2024.1.1 bw client hash updates, no new patchfile
 
@@ -73,7 +68,7 @@ Old Notes:
 ### Scratch
 
 ```
-docker buildx build --platform linux/amd64 -f Dockerfile -t jayknyn/ayam-secrets-web:2025.1.1 --load .
+docker buildx build --platform linux/amd64 -f Dockerfile -t jayknyn/ayam-secrets-web:2025.10.1 --load .
 ```
 
-- old docker build: `docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2025.1.1 .`
+- old docker build: `docker build -f Dockerfile -t jayknyn/ayam-secrets-web:2025.10.1 .`
