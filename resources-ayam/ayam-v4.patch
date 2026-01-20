@@ -1,0 +1,85 @@
+diff --git a/apps/web/src/app/auth/settings/two-factor/two-factor-setup-authenticator.component.ts b/apps/web/src/app/auth/settings/two-factor/two-factor-setup-authenticator.component.ts
+index 38288c811d..0396e8c95d 100644
+--- a/apps/web/src/app/auth/settings/two-factor/two-factor-setup-authenticator.component.ts
++++ b/apps/web/src/app/auth/settings/two-factor/two-factor-setup-authenticator.component.ts
+@@ -225,11 +225,11 @@ export class TwoFactorSetupAuthenticatorComponent
+     new window.QRious({
+       element: document.getElementById("qr"),
+       value:
+-        "otpauth://totp/Vaultwarden:" +
++        "otpauth://totp/AyamSecureSecrets:" +
+         Utils.encodeRFC3986URIComponent(email) +
+         "?secret=" +
+         encodeURIComponent(this.key) +
+-        "&issuer=Vaultwarden",
++        "&issuer=AyamSecureSecrets",
+       size: 160,
+     });
+   }
+diff --git a/apps/web/src/app/core/router.service.ts b/apps/web/src/app/core/router.service.ts
+index 737d917652..096886c251 100644
+--- a/apps/web/src/app/core/router.service.ts
++++ b/apps/web/src/app/core/router.service.ts
+@@ -61,7 +61,7 @@ export class RouterService {
+       .subscribe((event: NavigationEnd) => {
+         this.currentUrl = event.url;
+ 
+-        let title = "Vaultwarden Web";
++        let title = "Ayam Secure Secrets Web Vault";
+ 
+         if (this.currentUrl.includes("/sm/")) {
+           title = i18nService.t("bitSecretsManager");
+diff --git a/apps/web/src/app/layouts/header/web-header.component.html b/apps/web/src/app/layouts/header/web-header.component.html
+index fa175efbed..81b5350a53 100644
+--- a/apps/web/src/app/layouts/header/web-header.component.html
++++ b/apps/web/src/app/layouts/header/web-header.component.html
+@@ -63,12 +63,7 @@
+                 <i class="bwi bwi-fw bwi-user" aria-hidden="true"></i>
+                 {{ "accountSettings" | i18n }}
+               </a>
+-              <a
+-                bitMenuItem
+-                href="https://github.com/dani-garcia/vaultwarden"
+-                target="_blank"
+-                rel="noreferrer"
+-              >
++              <a bitMenuItem href="https://ayamsecure.com/contact" target="_blank" rel="noreferrer">
+                 <i class="bwi bwi-fw bwi-question-circle" aria-hidden="true"></i>
+                 {{ "getHelp" | i18n }}
+               </a>
+diff --git a/apps/web/src/favicon.ico b/apps/web/src/favicon.ico
+index 8b64b26fad..1b5b63d5c7 100644
+Binary files a/apps/web/src/favicon.ico and b/apps/web/src/favicon.ico differ
+diff --git a/apps/web/src/index.html b/apps/web/src/index.html
+index 718e1fdd75..54e521ca1e 100644
+--- a/apps/web/src/index.html
++++ b/apps/web/src/index.html
+@@ -5,7 +5,7 @@
+     <meta name="viewport" content="width=1010" />
+     <meta name="theme-color" content="#175DDC" />
+ 
+-    <title page-title>Vaultwarden Web</title>
++    <title page-title>Ayam Secure Secrets Web Vault</title>
+ 
+     <link rel="apple-touch-icon" sizes="180x180" href="images/icons/apple-touch-icon.png" />
+     <link rel="icon" type="image/png" sizes="32x32" href="images/icons/favicon-32x32.png" />
+@@ -20,7 +20,7 @@
+       <!-- Note: any changes to this html need to be made in the app.component.html as well -->
+       <div class="tw-flex tw-flex-col tw-min-h-[100vh]">
+         <div class="tw-pt-5 tw-px-5 tw-fixed">
+-          <img class="new-logo-themed !tw-w-[200px]" alt="Vaultwarden" />
++          <img class="new-logo-themed !tw-w-[200px]" alt="Ayam Secure Secrets" />
+         </div>
+         <div class="spinner-container tw-justify-center">
+           <i
+diff --git a/apps/web/src/manifest.json b/apps/web/src/manifest.json
+index d9ff4771a3..a7d505cb25 100644
+--- a/apps/web/src/manifest.json
++++ b/apps/web/src/manifest.json
+@@ -1,5 +1,5 @@
+ {
+-  "name": "Vaultwarden Web",
++  "name": "Ayam Secure Secrets Web Vault",
+   "icons": [
+     {
+       "src": "images/icons/android-chrome-192x192.png",
