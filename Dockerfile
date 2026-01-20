@@ -23,8 +23,9 @@ RUN node --version && npm --version
 # Can be a tag, release, but prefer a commit hash because it's not changeable
 # https://github.com/bitwarden/clients/commit/${VAULT_VERSION}
 #
-# Using https://github.com/ayamsecure/secrets-web-source
-ARG VAULT_VERSION=ayam-v2-v2025.10.1
+# Using https://github.com/ayamsecure/secrets-web-source, always use commit hash
+ARG VAULT_VERSION=f2fac1392de3736e329e57784a09823688e2281d
+
 ENV VAULT_VERSION=$VAULT_VERSION
 ENV VAULT_FOLDER=bw_clients
 ENV CHECKOUT_TAGS=false
