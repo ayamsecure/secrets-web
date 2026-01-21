@@ -19,9 +19,10 @@ in `ayamsecure/secrets-web-source`:
 
 1. from terminal, `git checkout master` (ignore untracked changes) then `git fetch upstream` then `git merge upstream/master` then `git push origin master`
 2. `git checkout main-ayam` then `git merge master` to bring in new changes into main-ayam branch, resolve conflicts (accept incoming for ayam changes), `git add .` then `git commit` to conclude merge and `git push`
-3. from `main-ayam` branch, create new version branch `git checkout -b 2025.10.1`
-4. use colima x86 on optimac (16GB RAM, 4 CPU) (or jibhi3) (to follow upstream use of amd64 for web files build) to build image: docker login, then `docker buildx build --platform linux/amd64 -f Dockerfile -t jayknyn/ayam-secrets-web:2025.10.1-2 --push .`
-5. git push changes and after testing on staging service merge into main-ayam via PR
+3. from `main-ayam` branch, create new version branch `git checkout -b 2025.12.0`
+4. check for changes to Dockerfile and scripts/checkout_web_vault.sh (ensure AS repo)
+5. use colima x86 on optimac (16GB RAM, 4 CPU) (or jibhi3) (to follow upstream use of amd64 for web files build) to build image: docker login, then `docker buildx build --platform linux/amd64 -f Dockerfile.ayam -t jayknyn/ayam-secrets-web:2025.12.0 --push .`
+6. git push changes and after testing on staging service merge into main-ayam via PR
 
 ---
 
