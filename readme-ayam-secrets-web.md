@@ -1,28 +1,51 @@
 # Web Vault builds for Ayam Secure Secrets Web
 
 - This repo (`ayamsecure/secrets-web`) is forked from `dani-garcia/bw_web_builds` and `ayamsecure/secrets-web-source` is a fork of `vaultwarden/vw_web_builds` which is a fork of `bitwarden/clients`
-- Upon new release, the flow is, in `secrets-web-source` apply patchfile (which is in this repo), copy favicon, push up, get commit hash. Then in `secrets-web`, do below steps to sync repo with `bw_web_builds` (to pickup Dockerfile changes), in Dockerfile, update `ARG VAULT_VERSION` with commit hash from `secrets-web-source`, build `secrets-web` image, then in `secrets` repo, use this image hash to build `secrets` images.
+- Upon new release, the flow is, in `secrets-web-source` apply patchfile (which is in secrets-web repo), copy favicon, push up, get commit hash. Then in `secrets-web`, do below steps to sync repo with `bw_web_builds` (to pickup Dockerfile changes), in Dockerfile, update `ARG VAULT_VERSION` with commit hash from `secrets-web-source`, build `secrets-web` image, then in `secrets` repo, use this image hash to build `secrets` images.
 
 ### When a new dani-garcia/bw_web_builds release has been published:
 
 in `ayamsecure/secrets-web-source`:
 
 1. from terminal `git fetch upstream`
-2. then checkout specific upstream release branch: vaultwarden/vw_web_builds/branches, `git checkout v2025.12.0`
-3. create ayam specific branch `git checkout -b v2025.12.0-ayam`
-4. apply patch: `git apply --reject --whitespace=fix /Users/jay/codejk/ayam-secrets-web/resources-ayam/ayam-v4.patch`
-5. Copy favicon: `cp /Users/jay/codejk/ayam-secrets-web/resources-ayam/ayam-favicon.ico /Users/jay/codejk/ayam-secrets-web-source/apps/web/src/favicon.ico`
-6. If patch fails, resolve changes manually and create new patch file: `gacm 'updating patch'` then `git diff cc8cb941058fea67e525e6075ff13fc1f4aa924e HEAD > /Users/jay/codejk/ayam-secrets-web/resources-ayam/ayam-v4.patch`
-7. push changes up
+2. then checkout specific upstream release branch (check which version of web build is included in latest vaultwarden release): vaultwarden/vw_web_builds/branches, `git checkout v2026.4.1`
+3. create ayam specific branch `git checkout -b v2026.4.1-ayam`
+4. apply patch: `git apply --reject --whitespace=fix /Users/jay/code/ayamsecure/secrets-web/resources-ayam/ayam-v5.patch`
+5. if patch fails (any errors), resolve changes manually to the below 5 files, create new patch file, then apply favicon: `gacm 'applying ayam secrets patches'` then `git diff <latest-commit-hash-from-upstream-vw_web_builds> HEAD > /Users/jay/code/ayamsecure/secrets-web/resources-ayam/ayam-v6.patch`
+6. Copy favicon: `cp /Users/jay/code/ayamsecure/secrets-web/resources-ayam/ayam-favicon.ico /Users/jay/code/ayamsecure/secrets-web-source/apps/web/src/favicon.ico`
+7. push changes up: `gacm 'applying favicon'` then `git push`
 
 ### Then move to `ayamsecure/secrets-web`
 
 1. from terminal, `git checkout master` (ignore untracked changes) then `git fetch upstream` then `git merge upstream/master` then `git push origin master`
 2. `git checkout main-ayam` then `git merge master` to bring in new changes into main-ayam branch, resolve conflicts (accept incoming for ayam changes), `git add .` then `git commit` to conclude merge and `git push`
-3. from `main-ayam` branch, create new version branch `git checkout -b 2025.12.0`
+3. from `main-ayam` branch, create new version branch `git checkout -b 2026.4.1`
 4. check for changes to Dockerfile and scripts/checkout_web_vault.sh (ensure AS repo)
-5. use colima x86 on optimac (16GB RAM, 4 CPU) (or jibhi3) (to follow upstream use of amd64 for web files build) to build image: docker login, then `docker buildx build --platform linux/amd64 -f Dockerfile.ayam -t jayknyn/ayam-secrets-web:2025.12.0 --push .`
+5. use colima x86 on optimac (16GB RAM, 4 CPU) (or jibhi3) (to follow upstream use of amd64 for web files build) to build image: docker login, then `docker buildx build --platform linux/amd64 -f Dockerfile.ayam -t jayknyn/ayam-secrets-web:2026.4.1 --push .`
 6. git push changes and after testing on staging service merge into main-ayam via PR
+
+### Reference for files being patched in vw_web_builds
+
+```sh
+# Patch might fail if this code moves in upstream
+apps/web/src/app/auth/settings/two-factor/two-factor-setup-authenticator.component.ts
+- otpauth://totp/Vaultwarden > otpauth://totp/AyamSecureSecrets
+- issuer=Vaultwarden > issuer=AyamSecureSecrets
+
+apps/web/src/app/core/router.service.ts
+- title = "Vaultwarden Web" > title = "Ayam Secure Secrets Web Vault"
+
+apps/web/src/app/layouts/header/account-menu.component.html
+- href="https://github.com/dani-garcia/vaultwarden" > href="https://ayamsecure.com/contact"
+
+apps/web/src/index.html
+- '<title page-title>Vaultwarden Web</title>' > '<title page-title>Ayam Secure Secrets Web Vault</title>'
+- alt="Vaultwarden" > alt="Ayam Secure Secrets"
+
+apps/web/src/manifest.json
+- "name": "Vaultwarden Web" > "name": "Ayam Secure Secrets Web Vault"
+
+```
 
 ---
 
