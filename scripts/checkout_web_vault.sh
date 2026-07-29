@@ -2,7 +2,7 @@
 set -o pipefail -o errexit
 BASEDIR=$(RL=$(readlink -n "$0"); SP="${RL:-$0}"; dirname "$(cd "$(dirname "${SP}")"; pwd)/$(basename "${SP}")")
 
-FALLBACK_WEBVAULT_VERSION=v2026.4.1
+FALLBACK_WEBVAULT_VERSION=v2026.6.4
 
 # Error handling
 handle_error() {
