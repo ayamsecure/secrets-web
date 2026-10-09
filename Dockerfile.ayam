@@ -1,11 +1,11 @@
 # syntax=docker/dockerfile:1
 # Ayam Secrets Web build: removing tar steps, updating VAULT_VERSION
 
-FROM node:22-trixie AS build
+FROM node:24-trixie AS build
 RUN node --version && npm --version
 
-# Using https://github.com/ayamsecure/secrets-web-source/commits/v2026.6.4-ayam, always use commit hash
-ARG VAULT_VERSION=54bd688d81c78a97a416d122a6e855eb8e4c7deb
+# Using https://github.com/ayamsecure/secrets-web-source/commits/v2026.7.0-ayam, always use commit hash
+ARG VAULT_VERSION=0158e6c3725b6d1da7f3b6c92edba1302f5683aa
 ENV VAULT_VERSION=$VAULT_VERSION
 ENV VAULT_FOLDER=bw_clients
 ENV CHECKOUT_TAGS=false
