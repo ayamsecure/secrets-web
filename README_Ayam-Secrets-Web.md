@@ -8,8 +8,8 @@
 ### First in `ayamsecure/secrets-web-source`:
 
 1. from terminal `git fetch upstream`
-2. then checkout specific upstream release branch (check which version of web build is included in latest vaultwarden release): vaultwarden/vw_web_builds/branches, `git checkout v2026.6.4`
-3. create ayam specific branch `git checkout -b v2026.6.4-ayam`
+2. then checkout specific upstream release branch (check which version of web build is included in latest bw_web_builds release, not pre-release): vaultwarden/vw_web_builds/branches, `git checkout v2026.7.0`
+3. create ayam specific branch `git checkout -b v2026.7.0-ayam`
 4. apply patch: `git apply --reject --whitespace=fix /Users/jay/code/ayamsecure/secrets-web/resources-ayam/ayam-v5.patch`
 5. if patch fails (any errors), resolve changes manually to the below 5 files, create new patch file, then apply favicon: `gacm 'applying ayam secrets patches'` then `git diff <latest-commit-hash-from-upstream-vw_web_builds> HEAD > /Users/jay/code/ayamsecure/secrets-web/resources-ayam/ayam-v6.patch`
 6. Copy favicon: `cp /Users/jay/code/ayamsecure/secrets-web/resources-ayam/ayam-favicon.ico /Users/jay/code/ayamsecure/secrets-web-source/apps/web/src/favicon.ico` and `gacm 'applying favicon'`
@@ -17,13 +17,14 @@
 
 ### Then move to `ayamsecure/secrets-web`
 
-1. from terminal, `git checkout master` (ignore untracked changes) then `git fetch upstream` then `git merge upstream/master` then `git push origin master`
-2. `git checkout main-ayam` then `git merge master` to bring in new changes into main-ayam branch, resolve conflicts (accept incoming for ayam changes), `git add .` then `git commit` to conclude merge and `git push`
-3. from `main-ayam` branch, create new version branch `git checkout -b 2026.6.4`
-4. check for changes to Dockerfile (update commit hash of secrets-web-source) and `scripts/checkout_web_vault.sh` (ensure ayamsecure repo: ln 37, 52, 53, 54, 57)
-5. use colima x86 on optimac (16GB RAM, 4 CPU) (or jibhi3) (to follow upstream use of amd64 for web files build) to build image: docker login, then `docker buildx build --platform linux/amd64 -f Dockerfile.ayam -t jayknyn/ayam-secrets-web:2026.6.4 --push .`
-6. git push changes and after testing on staging service merge into main-ayam via PR
-7. then move to `ayamsecure/secrets`
+1. from terminal, `git checkout main-ayam` and `git pull`
+2. `git checkout master` (ignore untracked changes) then `git fetch upstream` then `git merge upstream/master` then `git push origin master`
+3. `git checkout main-ayam` then `git merge master` to bring in new changes into main-ayam branch, resolve conflicts (accept incoming for ayam changes), `git add .` then `git commit` to conclude merge and `git push`
+4. from `main-ayam` branch, create new version branch `git checkout -b 2026.7.0`
+5. check for changes to Dockerfile (update commit hash of secrets-web-source) and `scripts/checkout_web_vault.sh` (ensure ayamsecure repo: ln 37, 52, 53, 54, 57)
+6. use colima x86 on optimac (16GB RAM, 4 CPU) (or jibhi3) (to follow upstream use of amd64 for web files build) to build image: `docker login`, then `docker buildx build --platform linux/amd64 -f Dockerfile.ayam -t jayknyn/ayam-secrets-web:2026.7.0 --push .`
+7. git push changes and after testing on staging service merge into main-ayam via PR
+8. then move to `ayamsecure/secrets`
 
 ### Reference for files being patched in vw_web_builds
 
