@@ -4,8 +4,8 @@
 FROM node:24-trixie AS build
 RUN node --version && npm --version
 
-# Using https://github.com/ayamsecure/secrets-web-source/commits/v2026.7.0-ayam, always use commit hash
-ARG VAULT_VERSION=0158e6c3725b6d1da7f3b6c92edba1302f5683aa
+# Using https://github.com/ayamsecure/secrets-web-source/commits/v2026.10.1-ayam, always use commit hash
+ARG VAULT_VERSION=0af79c17f4a1dd334bb80310101b88c85f9badd4
 ENV VAULT_VERSION=$VAULT_VERSION
 ENV VAULT_FOLDER=bw_clients
 ENV CHECKOUT_TAGS=false
